@@ -1,0 +1,5 @@
+/venv/
+/virt/
+/static/
+/.env
+**/__pycache__/
