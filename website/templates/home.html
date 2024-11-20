@@ -7,7 +7,12 @@
 
         {% if user.is_authenticated %}
         <div class="text-center">
-            <h1>Hello, {{ user.username }}!</h1>
+            <h1>Customers :</h1>
+            {% if customers %}
+                {% for customer in customers %}
+                    {{customer}}<br/>
+                {% endfor %}
+            {% endif %}
         </div>
         {% else %}
         <div class="card shadow-sm">
