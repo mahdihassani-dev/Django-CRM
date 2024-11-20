@@ -1,63 +1,77 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% block content %} {% if user.is_authenticated %}
 
-{% block content %}
-  {% if user.is_authenticated %}
-    <div>
-      <h1>Customers :</h1>
+<style>
+  a {
+    text-decoration: none;
+  }
+  </style>
 
-      <table class="table table-hover table-bordered">
-        <thead class="table table-dark">
-          <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Email</th>
-            <th scope="col">Phone</th>
-            <th scope="col">Address</th>
-            <th scope="col">City</th>
-            <th scope="col">State</th>
-            <th scope="col">Zipcode</th>
-            <th scope="col">Created At</th>
-            <th scope="col">ID</th>
-          </tr>
-        </thead>
+<div>
+  <h1>Customers :</h1>
+  <br />
 
-        <tbody>
-          {% if customers %}
-            {% for customer in customers %}
-              <tr>
-                <td>{{ customer.first_name }} {{ customer.last_name }}</td>
-                <td>{{ customer.email }}</td>
-                <td>{{ customer.phone }}</td>
-                <td>{{ customer.address }}</td>
-                <td>{{ customer.city }}</td>
-                <td>{{ customer.state }}</td>
-                <td>{{ customer.zipcode }}</td>
-                <td>{{ customer.created_at }}</td>
-                <td>{{ customer.id }}</td>
-              </tr>
-            {% endfor %}
-          {% endif %}
-        </tbody>
-      </table>
-    </div>
-  {% else %}
-    <div class="d-flex justify-content-center align-items-center vh-100">
-      <div class="col-md-6 col-lg-4">
-        <div class="card shadow-sm">
-          <div class="card-body">
-            <h1 class="card-title text-center mb-4">Login Form</h1>
-            <form method="POST" action="{% url 'home' %}">
-              {% csrf_token %}
-              <div class="mb-3">
-                <input type="text" class="form-control" name="username" placeholder="Username" required />
-              </div>
-              <div class="mb-3">
-                <input type="password" class="form-control" name="password" placeholder="Password" required />
-              </div>
-              <button type="submit" class="btn btn-secondary w-100">Login</button>
-            </form>
+  <table class="table table-hover table-bordered">
+    <thead class="table table-dark">
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Phone</th>
+        <th scope="col">Address</th>
+        <th scope="col">City</th>
+        <th scope="col">State</th>
+        <th scope="col">Zipcode</th>
+        <th scope="col">Created At</th>
+        <th scope="col" >ID</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% if customers %} {% for customer in customers %}
+      <tr>
+        <td>{{ customer.first_name }} {{ customer.last_name }}</td>
+        <td>{{ customer.email }}</td>
+        <td>{{ customer.phone }}</td>
+        <td>{{ customer.address }}</td>
+        <td>{{ customer.city }}</td>
+        <td>{{ customer.state }}</td>
+        <td>{{ customer.zipcode }}</td>
+        <td>{{ customer.created_at }}</td>
+        <td><a href = "{% url 'customer' customer.id %}">{{ customer.id }}</a></td>
+      </tr>
+      {% endfor %} {% endif %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<div class="d-flex justify-content-center align-items-center vh-100">
+  <div class="col-md-6 col-lg-4">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h1 class="card-title text-center mb-4">Login Form</h1>
+        <form method="POST" action="{% url 'home' %}">
+          {% csrf_token %}
+          <div class="mb-3">
+            <input
+              type="text"
+              class="form-control"
+              name="username"
+              placeholder="Username"
+              required
+            />
           </div>
-        </div>
+          <div class="mb-3">
+            <input
+              type="password"
+              class="form-control"
+              name="password"
+              placeholder="Password"
+              required
+            />
+          </div>
+          <button type="submit" class="btn btn-secondary w-100">Login</button>
+        </form>
       </div>
     </div>
-  {% endif %}
-{% endblock %}
+  </div>
+</div>
+{% endif %} {% endblock %}

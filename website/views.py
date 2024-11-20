@@ -44,3 +44,11 @@ def register_user(request):
         return render(request, "register.html", {'form': form})
     
     return render(request, "register.html", {'form': form})
+
+
+def customer_record(request, pk):
+    if request.user.is_authenticated:
+        customer = Customer.objects.get(id=pk)
+        return render(request, 'customer.html', {'customer':customer})
+    messages.error(request, "You must be logged in to see customers detail")
+    return redirect('home')
