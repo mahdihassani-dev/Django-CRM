@@ -66,7 +66,6 @@ def delete_customer(request, pk):
     
 
 def add_record(request):
-    
     form = AddCustomerForm(request.POST or None)
     if request.user.is_authenticated:
         if request.method == "POST":
@@ -78,3 +77,19 @@ def add_record(request):
     else:
         messages.error(request, "You Must be logged in to add customer")
         return redirect('home')
+    
+    
+def update_customer(request, pk):
+    if request.user.is_authenticated:
+        current_customer = Customer.objects.get(id=pk)
+        form = AddCustomerForm(request.POST or None, instance=current_customer)
+        if request.method == "POST":
+            if form.is_valid():
+                form.save()
+                messages.success(request, "Customer Updated")
+                return redirect('customer', pk=pk)
+        return render(request, 'update_record.html', {'form':form})
+    else:
+        messages.error(request, "You Must be logged in to update customer")
+        return redirect('home')
+        
