@@ -52,3 +52,14 @@ def customer_record(request, pk):
         return render(request, 'customer.html', {'customer':customer})
     messages.error(request, "You must be logged in to see customers detail")
     return redirect('home')
+
+
+def delete_customer(request, pk):
+    if request.user.is_authenticated:
+        delete_it = Customer.objects.get(id=pk)
+        delete_it.delete()
+        messages.success(request, "Record Deleted Successfully")
+        return redirect('home')
+    else:
+        messages.error(request, "You must be logged in to see customers detail")
+        return redirect('home')
