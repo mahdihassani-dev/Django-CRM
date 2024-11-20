@@ -45,8 +45,11 @@
                     <strong>ID:</strong> <span>{{ customer.id }}</span>
                 </div>
             </div>
-            <!-- Delete Button -->
-            <div class="text-center mt-4">
+            <!-- Buttons: Delete and Update -->
+            <div class="d-flex justify-content-end mt-4">
+                <a href="#" class="btn btn-warning me-3">
+                    <i class="bi bi-pencil"></i> Update
+                </a>
                 <a href="{% url 'delete-customer' customer.id %}" class="btn btn-danger">
                     <i class="bi bi-trash"></i> Delete
                 </a>
