@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from .forms import SignUpForm
+from .forms import SignUpForm, AddCustomerForm
 from .models import Customer
 
 def home(request):
@@ -52,3 +52,29 @@ def customer_record(request, pk):
         return render(request, 'customer.html', {'customer':customer})
     messages.error(request, "You must be logged in to see customers detail")
     return redirect('home')
+
+
+def delete_customer(request, pk):
+    if request.user.is_authenticated:
+        delete_it = Customer.objects.get(id=pk)
+        delete_it.delete()
+        messages.success(request, "Record Deleted Successfully")
+        return redirect('home')
+    else:
+        messages.error(request, "You must be logged in to see customers detail")
+        return redirect('home')
+    
+
+def add_record(request):
+    
+    form = AddCustomerForm(request.POST or None)
+    if request.user.is_authenticated:
+        if request.method == "POST":
+            if form.is_valid():
+                form.save()
+                messages.success(request, "Customer Added")
+                return redirect('home')
+        return render(request, 'add_record.html', {'form':form})
+    else:
+        messages.error(request, "You Must be logged in to add customer")
+        return redirect('home')
