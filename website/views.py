@@ -63,3 +63,14 @@ def delete_customer(request, pk):
     else:
         messages.error(request, "You must be logged in to see customers detail")
         return redirect('home')
+    
+
+def add_record(request):
+    
+    if request.method == 'POST':
+        # form validation and create new customer
+        Customer.objects.create(
+            
+        )
+    
+    return render(request, 'add_record.html', {})
